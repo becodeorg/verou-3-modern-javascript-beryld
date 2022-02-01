@@ -1,8 +1,9 @@
-// import fetchMeteo from "./modules/fetchMeteo.js";
+import backgroundLa, {cityInput} from "./fetchMeteo.js";
 import { data } from "./config.js";
+
 const {
   searchButton,
-  cityInput,
+
 } = consts();
 
 cityInput.value = "Taiwan";
@@ -29,12 +30,15 @@ const fetchCoordinates = () => {
     })  
     .then(function (responseLat) {
       let lat = responseLat[0].lat;
+      
       let lon = responseLat[0].lon;
       var nameCity = responseLat[0].name;
       fetchMeteo(lat,lon, nameCity);
-      imgFishing();
+      backgroundLa();
+      
     });
 };
+
 
 const fetchMeteo = (lat, lon, nameCity) => {
   fetch( "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=metric&exclude=minutely,alerts&mode=json&appid=" + data.key )
@@ -56,7 +60,6 @@ const fetchMeteo = (lat, lon, nameCity) => {
           });
 };
 
-
 const fetchPrecip = (response) => {
   for (let index = 0; index < 4; index++) {
     document.querySelectorAll(".popic")[index].textContent = parseInt(response.daily[index + 1].pop * 100) + " %";
@@ -73,26 +76,7 @@ const fetchIcons = (response) => {
   }
 };
 
-const imgFishing = () => {
-  fetch("https://api.unsplash.com/search/photos?query=" + cityInput.value + "&per_page=20&client_id=" + data.unsplkey )
-    .then(function (unsplashResponse) {
-      if (!unsplashResponse.ok) {
-        throw new Error( `HTTP error! Biiiiiiiiiiiip status: ${unsplashResponse.status}`
-        );
-      }
-      return unsplashResponse.json();
-    })
-    .catch(error => { 
-      console.log(error)
-    })  
-    //If style not backgroundimage but just background the cover property wont work !!!!
-    .then(function (unsplashResponse) {
-      const imgArraySize = unsplashResponse.results.length;
-      const choise = Math.floor(Math.random() * imgArraySize);
-      document.getElementById("bodybackA").style.backgroundImage = "linear-gradient(rgba(255, 255, 255, .7), rgba(255,255,255,0.5)), " + "url('" + unsplashResponse.results[choise - 1].urls.small + ")";
-      document.getElementById("foot").textContent = "Unsplash  license : " + unsplashResponse.results[choise - 1].user.name + "\n" + unsplashResponse.results[choise - 1].user.links.html; });
-   
-};
+
 
 const fetchNameAndTemperature = (response) => {for (let i = 0; i < 4; i++) {
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -118,10 +102,10 @@ searchButton.addEventListener("click", fetchCoordinates);
 
 
 function consts() {
-  const cityInput = document.getElementById("city");
+  
   const searchButton = document.getElementById("cityButt");
     return {
-      cityInput,
+      
       searchButton,
   };
 }
