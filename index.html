@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css" />
+    <title id="titleCity">Weather</title>
+  </head>
+  <body>
+    <div id="bodybackA">
+      <section id="main-container-research">
+        <!-- <img
+          id="img-container"
+          src="./mage/season.png"
+          alt="I'll put a logo or an image here "
+        /> -->
+        <input id="city" placeholder="Type your city here" type="text" />
+        <!-- <label for="city"></label> -->
+        <button id="cityButt">&#8594</button>
+      </section>
+      <section id="container-results" style="visibility: visible;">
+        <div class="current-results">
+          <div id="today-date"></div>
+          <div id="name-city"></div>
+
+          
+          <div id="current"></div>
+        </div>
+       
+        <div id="fiveDays">
+          <div class="day" id="day-plus-one">
+            <div class="day-name" id="day-one"></div>
+
+            <div class="icon-pop" id="line-one">
+              <img class="ic" id="icon-one" src="" alt="" />
+              <div class="popic" id="popidity-one"></div>
+            </div>
+            <div class="temperature" id="temp-one"></div>
+          </div>
+          <div class="day" id="day-plus-two">
+            <div class="day-name" id="day-two"></div>
+            <div class="icon-pop" id="line-two">
+              <img class="ic" id="icon-two" src="" alt="" />
+              <div class="popic" id="popidity-two"></div>
+            </div>
+            <div class="temperature" id="temp-two"></div>
+          </div>
+          <div class="day" id="day-plus-three">
+            <div class="day-name" id="day-three"></div>
+            <div class="icon-pop" id="line-three">
+              <img class="ic" id="icon-three" src="" alt="" />
+              <div class="popic" id="popidity-three"></div>
+            </div>
+            <div class="temperature" id="temp-three"></div>
+          </div>
+          <div class="day" id="day-plus-four">
+            <div class="day-name" id="day-four"></div>
+            <div class="icon-pop" id="line-four">
+              <img class="ic" id="icon-four" src="" alt="" />
+              <div class="popic" id="popidity-four"></div>
+            </div>
+            <div class="temperature" id="temp-four"></div>
+          </div>
+        </div>
+      </section>
+      <footer>
+          <div>
+          OpenWeather (TM) as a weather data provider
+        </div>
+        <div id="foot">
+
+        </div>
+    </footer>
+    </div>
+
+    <script type="module" src="./index.js"></script>
+    <script type="module" src="./modules/fetchMeteo.js"></script>
+  </body>
+</html>
