@@ -24,13 +24,13 @@ const fetchCoordinates = () => {
         var nameCity = responseLat[0].name;
         
         
-        fetchMeteo(lat,lon, nameCity);
+        getMeteo(lat,lon, nameCity);
         backgroundLa();
         
       });
   };
   
-const fetchMeteo = (lat, lon, nameCity,timezoning) => {
+const getMeteo = (lat, lon, nameCity,timezoning) => {
     fetch( "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=metric&exclude=minutely,alerts&mode=json&appid=" + data.key )
     
       .then(function (response) {
@@ -47,18 +47,19 @@ const fetchMeteo = (lat, lon, nameCity,timezoning) => {
         document.getElementById("name-city").textContent = nameCity;
         document.getElementById("current").textContent = parseInt(response.current.temp) + "";
         console.log(lat,lon,data.key);
-        fetchNameAndTemperature(response);
-        fetchIcons(response);
-        fetchPrecip(response);
-        fetchTime(response)
+        const timezoning= response.timezone;
+        getNameAndTemperature(response);
+        getIcons(response);
+        getPrecip(response);
+        getTime(timezoning)
 
 
             });
   };
   
-  const fetchTime = (response) => {
+  const getTime = (timezoning) => {
   // const timingDate = document.getElementById('today-date')
-  const timezoning= response.timezone;
+  
   const timingDate = document.getElementById('today-date')
   // const dttt = DateTime.local().setZone(timezoning).toFormat( "HH:mm:ss")
   // timingDate.textContent=   dttt 
@@ -67,7 +68,8 @@ const fetchMeteo = (lat, lon, nameCity,timezoning) => {
     
     
     // const timezoning= response.timezone;
-    const dttt = DateTime.local().setZone(timezoning).toFormat( "HH:mm:ss")  
+    
+    let dttt = DateTime.local().setZone(timezoning).toFormat( "HH:mm:ss")  
     console.log(timezoning);
     timingDate.textContent=dttt
   },1000)
@@ -83,7 +85,7 @@ const fetchMeteo = (lat, lon, nameCity,timezoning) => {
 //   const dttt = DateTime.local().setZone(timezoning).toFormat( "HH:mm:ss")
 //   timingDate.textContent=   dttt},1000);
 
-  const fetchNameAndTemperature = (response) => 
+  const getNameAndTemperature = (response) => 
   {for (let i = 0; i < 4; i++) {
     const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     let todayla = new Date();
@@ -97,13 +99,13 @@ const fetchMeteo = (lat, lon, nameCity,timezoning) => {
   }
   
   };
-  const fetchPrecip = (response) => {
+  const getPrecip = (response) => {
     for (let index = 0; index < 4; index++) {
       document.querySelectorAll(".popic")[index].textContent = parseInt(response.daily[index + 1].pop * 100) + " %";
     }
   };
   
-  const fetchIcons = (response) => {
+  const getIcons = (response) => {
     const icons = document.querySelectorAll(".ic");
     for (let i = 0; i < 4; i++) {
     icons[i].src = "https://openweathermap.org/img/wn/" + response.daily[i + 1].weather[0].icon + "@2x.png";
