@@ -18,7 +18,7 @@ const imgFishing = () => {
       .then(function (unsplashResponse) {
         const imgArraySize = unsplashResponse.results.length;
         const choise = Math.floor(Math.random() * imgArraySize);
-        document.getElementById("bodybackA").style.backgroundImage = "linear-gradient(rgba(255, 255, 255, .7), rgba(255,255,255,0.5)), " + "url('" + unsplashResponse.results[choise - 1].urls.small + ")";
+        document.getElementById("bodybackA").style.backgroundImage = "linear-gradient(rgba(255, 255, 255, .7), rgba(255,255,255,0.5)), " + "url('" + unsplashResponse.results[choise - 1].urls.small + ")"
         document.getElementById("foot").textContent = "Unsplash  license : " + unsplashResponse.results[choise - 1].user.name + "\n" + unsplashResponse.results[choise - 1].user.links.html; });
      
   };

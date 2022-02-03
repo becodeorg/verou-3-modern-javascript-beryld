@@ -1,6 +1,7 @@
 
 import backgroundLa, {cityInput}from "./fetchImage.js";
 import { data } from "./config.js";
+import { DateTime, Settings } from "luxon";
 
 const fetchCoordinates = () => {
     fetch(
@@ -29,7 +30,7 @@ const fetchCoordinates = () => {
       });
   };
   
-const fetchMeteo = (lat, lon, nameCity) => {
+const fetchMeteo = (lat, lon, nameCity,timezoning) => {
     fetch( "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=metric&exclude=minutely,alerts&mode=json&appid=" + data.key )
     
       .then(function (response) {
@@ -45,13 +46,43 @@ const fetchMeteo = (lat, lon, nameCity) => {
       .then(function (response) {
         document.getElementById("name-city").textContent = nameCity;
         document.getElementById("current").textContent = parseInt(response.current.temp) + "";
-        
+        console.log(lat,lon,data.key);
         fetchNameAndTemperature(response);
         fetchIcons(response);
         fetchPrecip(response);
+        fetchTime(response)
+
+
             });
   };
   
+  const fetchTime = (response) => {
+  // const timingDate = document.getElementById('today-date')
+  const timezoning= response.timezone;
+  const timingDate = document.getElementById('today-date')
+  // const dttt = DateTime.local().setZone(timezoning).toFormat( "HH:mm:ss")
+  // timingDate.textContent=   dttt 
+  
+  setInterval(function() {
+    
+    
+    // const timezoning= response.timezone;
+    const dttt = DateTime.local().setZone(timezoning).toFormat( "HH:mm:ss")  
+    console.log(timezoning);
+    timingDate.textContent=dttt
+  },1000)
+    
+  // console.log(timezoning);
+}
+
+// setInterval(fetchTime,1000)
+
+// setInterval(const fetchTime(response){
+//   const timingDate = document.getElementById('today-date')
+//   const timezoning= response.timezone
+//   const dttt = DateTime.local().setZone(timezoning).toFormat( "HH:mm:ss")
+//   timingDate.textContent=   dttt},1000);
+
   const fetchNameAndTemperature = (response) => 
   {for (let i = 0; i < 4; i++) {
     const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -62,7 +93,6 @@ const fetchMeteo = (lat, lon, nameCity) => {
         dayMax = dayMax - 7;
     }
     document.querySelectorAll(".day-name")[i].textContent = daysOfWeek[dayMax];
-    console.log(response);
     document.querySelectorAll(".temperature")[i].textContent = parseInt(response.daily[i + 1].temp.day) + "°";
   }
   
