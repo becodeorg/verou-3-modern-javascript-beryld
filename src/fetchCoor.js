@@ -1,6 +1,6 @@
 import backgroundLa, { cityInput } from "./fetchImage.js";
 import { data } from "./config.js";
-import { DateTime, Settings } from "luxon";
+import { DateTime } from "luxon";
 
 const fetchCoordinates = () => {
   fetch(
@@ -11,6 +11,7 @@ const fetchCoordinates = () => {
   )
     .then(function (responseLat) {
       if (!responseLat.ok) {
+        // eslint-disable-next-line no-undef
         throw new Error(" Biiiiiiiiip " + response.status);
       }
       return responseLat.json();
@@ -29,7 +30,7 @@ const fetchCoordinates = () => {
     });
 };
 
-const getMeteo = (lat, lon, nameCity, timezoning) => {
+const getMeteo = (lat, lon, nameCity) => {
   fetch(
     "https://api.openweathermap.org/data/2.5/onecall?lat=" +
       lat +
